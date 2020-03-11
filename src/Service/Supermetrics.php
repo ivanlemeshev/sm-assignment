@@ -73,14 +73,16 @@ class Supermetrics
                 return '';
             }
 
-            $data = json_decode($response->getBody(), true);
-            if (isset($data['data']['sl_token'])) {
+            /** @var array $data */
+            $data = json_decode($response->getBody()->getContents(), true);
+            if (isset($data['data']['sl_token']) && is_string($data['data']['sl_token'])) {
                 return $data['data']['sl_token'];
             }
         } catch (RequestException $e) {
-            $context['request'] = Psr7\str($e->getRequest());
-            if ($e->getResponse()) {
-                $context['response'] = Psr7\str($e->getResponse());
+            $context = ['request' => Psr7\str($e->getRequest())];
+            $response = $e->getResponse();
+            if ($response !== null) {
+                $context['response'] = Psr7\str($response);
             }
 
             $this->logger->error('Exception on registering client', $context);
@@ -118,14 +120,16 @@ class Supermetrics
                 return [];
             }
 
-            $data = json_decode($response->getBody(), true);
-            if (isset($data['data']['posts'])) {
+            /** @var array $data */
+            $data = json_decode($response->getBody()->getContents(), true);
+            if (isset($data['data']['posts']) && is_array($data['data']['posts'])) {
                 return $data['data']['posts'];
             }
         } catch (RequestException $e) {
-            $context['request'] = Psr7\str($e->getRequest());
-            if ($e->getResponse()) {
-                $context['response'] = Psr7\str($e->getResponse());
+            $context = ['request' => Psr7\str($e->getRequest())];
+            $response = $e->getResponse();
+            if ($response !== null) {
+                $context['response'] = Psr7\str($response);
             }
 
             $this->logger->error('Exception on getting posts', $context);
