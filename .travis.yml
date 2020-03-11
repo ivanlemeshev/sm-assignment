@@ -3,6 +3,10 @@ language: php
 php:
   - '7.4'
 
+env:
+  global:
+    - CC_TEST_REPORTER_ID=c3675c739001cbd223ccf8ac17f9b973ec2d86a323b6d6d613a41aecb9648933
+
 before_install:
   - composer install
 
