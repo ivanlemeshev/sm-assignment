@@ -19,10 +19,10 @@ stop-app:
 .PHONY: check
 check:
 	$(info Running linters and static analysis)
-	docker run -v $(PWD):/app -w /app php-runner vendor/bin/phpcbf --standard=PSR2 web
-	docker run -v $(PWD):/app -w /app php-runner vendor/bin/psalm --show-info=true web
+	docker run -v $(PWD):/app -w /app php-runner vendor/bin/phpcbf --standard=PSR2 src web
+	docker run -v $(PWD):/app -w /app php-runner vendor/bin/psalm --show-info=true src web
 
 .PHONY: test
 test:
 	$(info Running tests)
-	docker run -v $(PWD):/app -w /app php-runner vendor/bin/codecept run
+	docker run -v $(PWD):/app -w /app php-runner vendor/bin/codecept run --coverage --coverage-xml
