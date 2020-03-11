@@ -1,0 +1,14 @@
+version: '3'
+services:
+  supermetrics_app:
+    image: php:7.4-fpm-alpine
+    expose:
+      - "9000"
+    volumes:
+      - ./:/var/www/html
+  supermetrics_nginx:
+    build: docker/nginx
+    ports:
+      - "8080:80"
+    links:
+      - supermetrics_app
