@@ -22,10 +22,7 @@ check:
 	docker run -v $(PWD):/app -w /app php-runner vendor/bin/phpcbf --standard=PSR2 web
 	docker run -v $(PWD):/app -w /app php-runner vendor/bin/psalm --show-info=true web
 
-.PHONY: check
-add:
-	docker run -v $(pwd):/app -w /app php-runner composer require ${package}
-
-.PHONY: check
-add-dev:
-	docker run -v $(pwd):/app -w /app php-runner composer require --dev ${package}
+.PHONY: test
+test:
+	$(info Running tests)
+	docker run -v $(PWD):/app -w /app php-runner vendor/bin/codecept run

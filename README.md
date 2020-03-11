@@ -48,9 +48,9 @@ make check
 ## Installation of new dependencies
 
 ```bash
-make package="some/package" add
+docker run -v $(pwd):/app -w /app php-runner composer require some/package
 ```
 
 ```bash
-make package="some/package" add-dev
+docker run -v $(pwd):/app -w /app php-runner composer require --dev some/package
 ```

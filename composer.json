@@ -7,9 +7,21 @@
             "email": "vanlmshv@gmail.com"
         }
     ],
-    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "src"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^6.5",
+        "monolog/monolog": "^2.0",
+        "ext-json": "^7.4"
+    },
     "require-dev": {
         "vimeo/psalm": "^3.9",
-        "squizlabs/php_codesniffer": "^3.5"
+        "squizlabs/php_codesniffer": "^3.5",
+        "codeception/codeception": "^4.1",
+        "codeception/module-phpbrowser": "^1.0.0",
+        "codeception/module-asserts": "^1.0.0"
     }
 }
