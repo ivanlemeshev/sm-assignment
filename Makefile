@@ -25,4 +25,4 @@ check:
 .PHONY: test
 test:
 	$(info Running tests)
-	docker run -v $(PWD):/app -w /app php-runner vendor/bin/codecept run --coverage --coverage-xml
+	docker run -v $(PWD):/app -w /app php-runner vendor/bin/codecept run
