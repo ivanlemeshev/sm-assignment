@@ -1,5 +1,6 @@
 # Coding Assignment
 
+[![Build Status](https://travis-ci.org/ivanlemeshev/sm-assignment.svg?branch=master)](https://travis-ci.org/ivanlemeshev/sm-assignment)
 [![Maintainability](https://api.codeclimate.com/v1/badges/dddcb4ce2cfcae838af4/maintainability)](https://codeclimate.com/github/ivanlemeshev/sm-assignment/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/dddcb4ce2cfcae838af4/test_coverage)](https://codeclimate.com/github/ivanlemeshev/sm-assignment/test_coverage)
 
