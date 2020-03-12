@@ -45,7 +45,7 @@ class SupermetricsPosts
         $token = $this->getToken();
         $posts = [];
 
-        if ($token === '') {
+        if ($token == '') {
             return $posts;
         }
 
@@ -70,7 +70,7 @@ class SupermetricsPosts
      */
     private function getToken(): string
     {
-        if (empty($_SESSION["token"]) || $_SESSION["token_expired_time"] > strtotime('now')) {
+        if (empty($_SESSION["token"]) || $_SESSION["token_expired_time"] < strtotime('now')) {
             $_SESSION["token_expired_time"] = strtotime('now + 50 minutes');
             $_SESSION["token"] = $this->supermetrics->register($this->credentials);
         }

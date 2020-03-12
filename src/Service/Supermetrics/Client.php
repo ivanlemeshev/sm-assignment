@@ -2,7 +2,6 @@
 
 namespace App\Service\Supermetrics;
 
-use App\Service\Supermetrics\Credentials;
 use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
@@ -106,7 +105,6 @@ class Client
             $response = $this->client->get('/assignment/posts', [
                 'query' => $query,
             ]);
-
 
             if ($response->getStatusCode() != 200) {
                 $this->logger->error('Error on getting posts', [
