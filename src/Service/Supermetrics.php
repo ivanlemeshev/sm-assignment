@@ -15,19 +15,19 @@ use Psr\Log\LoggerInterface;
 class Supermetrics
 {
     /**
-     * The HTTP client
+     * The HTTP client.
      *
-     * @var Client $client
+     * @var Client
      */
     private Client $client;
 
     /**
-     * @var LoggerInterface $logger.
+     * @var LoggerInterface
      */
     private LoggerInterface $logger;
 
     /**
-     * Supermetrics constructor
+     * Supermetrics constructor.
      *
      * @param string $baseUrl
      * @param LoggerInterface $logger
@@ -44,7 +44,7 @@ class Supermetrics
     }
 
     /**
-     * Registers the client and returns its token
+     * Registers the client and returns its token.
      *
      * @param string $clientId
      * @param string $email
@@ -92,7 +92,7 @@ class Supermetrics
     }
 
     /**
-     * Fetches posts
+     * Fetches posts.
      *
      * @param string $token
      * @param int $page
