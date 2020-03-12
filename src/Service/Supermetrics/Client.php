@@ -1,25 +1,24 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Supermetrics;
 
-use GuzzleHttp\Client;
+use App\Service\Supermetrics\Credentials;
+use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class Supermetrics
+ * Class Client
  *
- * @package App\Service
+ * @package App\Service\Supermetrics
  */
-class Supermetrics
+class Client
 {
     /**
-     * The HTTP client.
-     *
-     * @var Client
+     * @var Guzzle
      */
-    private Client $client;
+    private Guzzle $client;
 
     /**
      * @var LoggerInterface
@@ -35,7 +34,7 @@ class Supermetrics
      */
     public function __construct(string $baseUrl, LoggerInterface $logger, callable $handler = null)
     {
-        $this->client = new Client([
+        $this->client = new Guzzle([
             'base_uri' => $baseUrl,
             'timeout'  => 1.0,
             'handler' => $handler,
@@ -44,20 +43,18 @@ class Supermetrics
     }
 
     /**
-     * Registers the client and returns its token.
+     * Registers the client and returns token.
      *
-     * @param string $clientId
-     * @param string $email
-     * @param string $name
+     * @param Credentials $credentials
      * @return string
      */
-    public function register(string $clientId, string $email, string $name): string
+    public function register(Credentials $credentials): string
     {
         try {
             $formParams = [
-                'client_id' => $clientId,
-                'email' => $email,
-                'name' => $name,
+                'client_id' => $credentials->getClientId(),
+                'email' => $credentials->getEmail(),
+                'name' => $credentials->getName(),
             ];
 
             $response = $this->client->post('/assignment/register', [
