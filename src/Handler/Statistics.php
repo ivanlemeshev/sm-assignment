@@ -87,7 +87,7 @@ class Statistics
         }
 
         $longestPosts = [];
-        foreach($this->posts as $post) {
+        foreach ($this->posts as $post) {
             $month = $post->getCreatedTime()->format('m.Y');
             $length = mb_strlen($post->getMessage());
 
@@ -130,7 +130,7 @@ class Statistics
             $totalPosts[$key]++;
         }
 
-        uksort($totalPosts, function($a, $b) {
+        uksort($totalPosts, function ($a, $b) {
             $tm1 = strtotime($a);
             $tm2 = strtotime($b);
             return ($tm1 < $tm2) ? 1 : (($tm1 > $tm2) ? -1 : 0);
@@ -142,7 +142,8 @@ class Statistics
     /**
      * @return array
      */
-    private function getAverageNumberOfUserPostsByMonth(): array {
+    private function getAverageNumberOfUserPostsByMonth(): array
+    {
         if ($this->postsCount == 0) {
             return [];
         }
