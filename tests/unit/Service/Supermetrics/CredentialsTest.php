@@ -3,7 +3,7 @@
 use App\Service\Supermetrics\Credentials;
 use Codeception\Test\Unit;
 
-class SupermetricsCredentialsTest extends Unit
+class CredentialsTest extends Unit
 {
     protected Credentials $credentials;
 

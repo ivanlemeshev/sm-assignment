@@ -8,7 +8,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Psr\Log\Test\TestLogger;
 
-class SupermetricsClientTest extends Unit
+class ClientTest extends Unit
 {
     public function testRegister()
     {
