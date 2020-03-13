@@ -42,8 +42,14 @@ if (!is_string($_ENV['SUPERMETRICS_NAME'])) {
 
 
 $supermetrics = new Client($_ENV['SUPERMETRICS_BASE_URL'], $logger);
-$credentials = new Credentials($_ENV['SUPERMETRICS_CLIENT_ID'], $_ENV['SUPERMETRICS_EMAIL'], $_ENV['SUPERMETRICS_NAME']);
+
+$credentials = new Credentials(
+    $_ENV['SUPERMETRICS_CLIENT_ID'],
+    $_ENV['SUPERMETRICS_EMAIL'],
+    $_ENV['SUPERMETRICS_NAME']);
+
 $posts = new SupermetricsPosts($supermetrics, $credentials);
+
 $statistics = new Statistics(...$posts->getPosts());
 
 echo json_encode($statistics->show());
