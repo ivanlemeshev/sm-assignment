@@ -17,7 +17,7 @@ class StatisticsTest extends Unit
             'average_number_of_user_posts_by_month' => [],
         ];
 
-        $statistics = new Statistics($posts);
+        $statistics = new Statistics(...$posts);
         $this->assertEquals($expected, $statistics->show());
 
         $posts = [
@@ -122,7 +122,7 @@ class StatisticsTest extends Unit
             ],
         ];
 
-        $statistics = new Statistics($posts);
+        $statistics = new Statistics(...$posts);
         $this->assertEquals($expected, $statistics->show());
     }
 }

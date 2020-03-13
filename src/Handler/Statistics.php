@@ -22,11 +22,11 @@ class Statistics
     private int $postsCount = 0;
 
     /**
-     * PostStatistics constructor.
+     * Statistics constructor.
      *
-     * @param array $posts
+     * @param Post ...$posts
      */
-    public function __construct(array $posts)
+    public function __construct(Post ...$posts)
     {
         $this->posts = $posts;
         $this->postsCount = count($posts);
@@ -109,7 +109,7 @@ class Statistics
     }
 
     /**
-     * @return array
+     * @return array<string, int>
      */
     private function getTotalPostsByWeek(): array
     {
@@ -117,20 +117,27 @@ class Statistics
             return [];
         }
 
+        /** @var array<string, int> $totalPosts **/
         $totalPosts = [];
+
         foreach ($this->posts as $post) {
             $dateTime = clone $post->getCreatedTime();
             $weekStartDate = $dateTime->modify('Monday this week');
 
-            $key = $weekStartDate->format('d.m.Y');
-            if (!isset($totalPosts[$key])) {
-                $totalPosts[$key] = 0;
+            $week = $weekStartDate->format('d.m.Y');
+            if (!$week) {
+                // skip posts with incorrect dates
+                continue;
             }
 
-            $totalPosts[$key]++;
+            if (!isset($totalPosts[$week])) {
+                $totalPosts[$week] = 0;
+            }
+
+            $totalPosts[$week]++;
         }
 
-        uksort($totalPosts, function ($a, $b) {
+        uksort($totalPosts, function (string $a, string $b) {
             $tm1 = strtotime($a);
             $tm2 = strtotime($b);
             return ($tm1 < $tm2) ? 1 : (($tm1 > $tm2) ? -1 : 0);

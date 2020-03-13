@@ -43,21 +43,25 @@ class SupermetricsPosts
     public function getPosts(): array
     {
         $token = $this->getToken();
+
+        /** @var Post[] $posts */
         $posts = [];
 
         if ($token == '') {
             return $posts;
         }
 
-        try {
-            for ($page = 1; $page <= 10; $page++) {
-                $rows = $this->supermetrics->getPosts($token, $page);
-                foreach ($rows as $row) {
+        for ($page = 1; $page <= 10; $page++) {
+            $rows = $this->supermetrics->getPosts($token, $page);
+
+            /** @var array $row */
+            foreach ($rows as $row) {
+                try {
                     $posts[] = new Post($row);
+                } catch (\Exception $e) {
+                    // TODO handler exception
                 }
             }
-        } catch (\Exception $e) {
-            // TODO handler exception
         }
 
         return $posts;
@@ -75,6 +79,6 @@ class SupermetricsPosts
             $_SESSION["token"] = $this->supermetrics->register($this->credentials);
         }
 
-        return $_SESSION["token"];
+        return strval($_SESSION["token"]);
     }
 }

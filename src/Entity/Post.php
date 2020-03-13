@@ -47,10 +47,32 @@ class Post
      * @param array $data
      * @throws \Exception
      */
-    public function __construct(array $data = [])
+    public function __construct(array $data)
     {
+        if (empty($data['id']) || !is_string($data['id'])) {
+            throw new \Exception("ID should be a non-empty string");
+        }
 
-        // TODO validate values
+        if (empty($data['from_name']) || !is_string($data['from_name'])) {
+            throw new \Exception("From name should be a non-empty string");
+        }
+
+        if (empty($data['from_id']) || !is_string($data['from_id'])) {
+            throw new \Exception("Form ID should be a non-empty string");
+        }
+
+        if (empty($data['message']) || !is_string($data['message'])) {
+            throw new \Exception("Message should be a non-empty string");
+        }
+
+        if (empty($data['type']) || !is_string($data['type'])) {
+            throw new \Exception("Type should be a non-empty string");
+        }
+
+        if (empty($data['created_time']) || !is_string($data['created_time'])) {
+            throw new \Exception("Created time should be a non-empty string");
+        }
+
         $this->id = $data['id'];
         $this->fromName = $data['from_name'];
         $this->fromId = $data['from_id'];
