@@ -20,6 +20,7 @@ stop-app:
 check:
 	$(info Running linters and static analysis)
 	docker run -v $(PWD):/app -w /app php-runner vendor/bin/phpcbf --standard=PSR2 src web
+	docker run -v $(PWD):/app -w /app php-runner vendor/bin/phpcs --standard=PSR2 src web
 	docker run -v $(PWD):/app -w /app php-runner vendor/bin/psalm --show-info=true src web
 
 .PHONY: test

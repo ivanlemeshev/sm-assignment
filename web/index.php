@@ -46,7 +46,8 @@ $supermetrics = new Client($_ENV['SUPERMETRICS_BASE_URL'], $logger);
 $credentials = new Credentials(
     $_ENV['SUPERMETRICS_CLIENT_ID'],
     $_ENV['SUPERMETRICS_EMAIL'],
-    $_ENV['SUPERMETRICS_NAME']);
+    $_ENV['SUPERMETRICS_NAME']
+);
 
 $posts = new SupermetricsPosts($supermetrics, $credentials);
 
