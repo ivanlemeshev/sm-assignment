@@ -1,5 +1,9 @@
 <?php
 
+use App\Aggregator\AverageNumberOfUserPostsByMonth;
+use App\Aggregator\LongestPostByMonth;
+use App\Aggregator\PostAverageLengthByMonth;
+use App\Aggregator\TotalPostsByWeek;
 use App\Handler\Statistics;
 use App\Entity\Post;
 use Codeception\Test\Unit;
@@ -8,17 +12,9 @@ class StatisticsTest extends Unit
 {
     public function testShow()
     {
-        $posts = [];
-
-        $expected = [
-            'post_average_length_by_month' => [],
-            'longest_post_by_month' => [],
-            'total_posts_by_week' => [],
-            'average_number_of_user_posts_by_month' => [],
-        ];
-
-        $statistics = new Statistics(...$posts);
-        $this->assertEquals($expected, $statistics->show());
+        $expected = [];
+        $statistics = new Statistics();
+        $this->assertEquals($expected, $statistics->getData());
 
         $posts = [
             new Post([
@@ -122,7 +118,12 @@ class StatisticsTest extends Unit
             ],
         ];
 
-        $statistics = new Statistics(...$posts);
-        $this->assertEquals($expected, $statistics->show());
+        $statistics = new Statistics();
+        $statistics->add((new PostAverageLengthByMonth('post_average_length_by_month', $posts)));
+        $statistics->add((new LongestPostByMonth('longest_post_by_month', $posts)));
+        $statistics->add((new TotalPostsByWeek('total_posts_by_week', $posts)));
+        $statistics->add((new AverageNumberOfUserPostsByMonth('average_number_of_user_posts_by_month', $posts)));
+
+        $this->assertEquals($expected, $statistics->getData());
     }
 }

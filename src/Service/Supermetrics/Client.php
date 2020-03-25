@@ -34,7 +34,7 @@ class Client
      *
      * @param ClientBuilder $builder
      */
-    public function __construct(ClientBuilder $builder)
+    function __construct(ClientBuilder $builder)
     {
         $this->client = new Guzzle([
             'base_uri' => $builder->getBaseUrl(),

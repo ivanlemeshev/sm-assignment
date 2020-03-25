@@ -2,6 +2,10 @@
 
 require_once dirname(__DIR__) .'/vendor/autoload.php';
 
+use App\Aggregator\AverageNumberOfUserPostsByMonth;
+use App\Aggregator\LongestPostByMonth;
+use App\Aggregator\PostAverageLengthByMonth;
+use App\Aggregator\TotalPostsByWeek;
 use App\Handler\Statistics;
 use App\Provider\SupermetricsPosts;
 use App\Service\Supermetrics\ClientBuilder;
@@ -51,7 +55,10 @@ $client = (new ClientBuilder($_ENV['SUPERMETRICS_BASE_URL'], $credentials))
     ->build();
 
 $posts = new SupermetricsPosts($client);
+$statistics = new Statistics();
+$statistics->add((new PostAverageLengthByMonth('post_average_length_by_month', $posts->getPosts())));
+$statistics->add((new LongestPostByMonth('longest_post_by_month', $posts->getPosts())));
+$statistics->add((new TotalPostsByWeek('total_posts_by_week', $posts->getPosts())));
+$statistics->add((new AverageNumberOfUserPostsByMonth('average_number_of_user_posts_by_month', $posts->getPosts())));
 
-$statistics = new Statistics(...$posts->getPosts());
-
-echo json_encode($statistics->show());
+echo json_encode($statistics->getData());
