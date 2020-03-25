@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Service\Supermetrics;
 
@@ -34,7 +34,7 @@ class Client
      *
      * @param ClientBuilder $builder
      */
-    function __construct(ClientBuilder $builder)
+    public function __construct(ClientBuilder $builder)
     {
         $this->client = new Guzzle([
             'base_uri' => $builder->getBaseUrl(),

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 require_once dirname(__DIR__) .'/vendor/autoload.php';
 
@@ -54,11 +54,12 @@ $client = (new ClientBuilder($_ENV['SUPERMETRICS_BASE_URL'], $credentials))
     ->setLogger($logger)
     ->build();
 
-$posts = new SupermetricsPosts($client);
+$posts = (new SupermetricsPosts($client))->getPosts();
+
 $statistics = new Statistics();
-$statistics->add((new PostAverageLengthByMonth('post_average_length_by_month', $posts->getPosts())));
-$statistics->add((new LongestPostByMonth('longest_post_by_month', $posts->getPosts())));
-$statistics->add((new TotalPostsByWeek('total_posts_by_week', $posts->getPosts())));
-$statistics->add((new AverageNumberOfUserPostsByMonth('average_number_of_user_posts_by_month', $posts->getPosts())));
+$statistics->add((new PostAverageLengthByMonth('post_average_length_by_month', $posts)));
+$statistics->add((new LongestPostByMonth('longest_post_by_month', $posts)));
+$statistics->add((new TotalPostsByWeek('total_posts_by_week', $posts)));
+$statistics->add((new AverageNumberOfUserPostsByMonth('average_number_of_user_posts_by_month', $posts)));
 
 echo json_encode($statistics->getData());

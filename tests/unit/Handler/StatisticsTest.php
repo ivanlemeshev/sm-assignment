@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 use App\Aggregator\AverageNumberOfUserPostsByMonth;
 use App\Aggregator\LongestPostByMonth;

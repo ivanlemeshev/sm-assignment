@@ -1,13 +1,11 @@
-<?php
+<?php declare(strict_types = 1);
 
-use App\Service\Supermetrics\Client;
 use App\Service\Supermetrics\ClientBuilder;
 use App\Service\Supermetrics\Credentials;
 use Codeception\Test\Unit;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Psr\Log\Test\TestLogger;
 
 class ClientTest extends Unit
 {

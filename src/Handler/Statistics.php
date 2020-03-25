@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Handler;
 
@@ -19,7 +19,7 @@ class Statistics
     /**
      * @param AggregatorInterface $aggregator
      */
-    public function add(AggregatorInterface $aggregator)
+    public function add(AggregatorInterface $aggregator): void
     {
         $this->data[$aggregator->getFieldName()] = $aggregator->aggregate();
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Aggregator;
 
@@ -30,7 +30,7 @@ class PostAverageLengthByMonth implements AggregatorInterface
      * PostAverageLengthByMonth constructor.
      *
      * @param string $fieldName
-     * @param array $posts
+     * @param Post[] $posts
      */
     public function __construct(string $fieldName, array $posts)
     {
