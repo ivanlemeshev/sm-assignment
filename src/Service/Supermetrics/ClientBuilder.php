@@ -2,7 +2,6 @@
 
 namespace App\Service\Supermetrics;
 
-use phpDocumentor\Reflection\Types\Callable_;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
