@@ -4,7 +4,7 @@ require_once dirname(__DIR__) .'/vendor/autoload.php';
 
 use App\Handler\Statistics;
 use App\Provider\SupermetricsPosts;
-use App\Service\Supermetrics\Client;
+use App\Service\Supermetrics\ClientBuilder;
 use App\Service\Supermetrics\Credentials;
 use Dotenv\Dotenv;
 use Monolog\Logger;
@@ -40,16 +40,17 @@ if (!is_string($_ENV['SUPERMETRICS_NAME'])) {
     return;
 }
 
-
-$supermetrics = new Client($_ENV['SUPERMETRICS_BASE_URL'], $logger);
-
 $credentials = new Credentials(
     $_ENV['SUPERMETRICS_CLIENT_ID'],
     $_ENV['SUPERMETRICS_EMAIL'],
     $_ENV['SUPERMETRICS_NAME']
 );
 
-$posts = new SupermetricsPosts($supermetrics, $credentials);
+$client = (new ClientBuilder($_ENV['SUPERMETRICS_BASE_URL'], $credentials))
+    ->setLogger($logger)
+    ->build();
+
+$posts = new SupermetricsPosts($client);
 
 $statistics = new Statistics(...$posts->getPosts());
 

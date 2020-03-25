@@ -2,6 +2,7 @@
 
 use App\Entity\Post;
 use App\Service\Supermetrics\Client;
+use App\Service\Supermetrics\ClientBuilder;
 use App\Service\Supermetrics\Credentials;
 use App\Provider\SupermetricsPosts;
 use Codeception\Test\Unit;
@@ -60,10 +61,12 @@ class SupermetricsPostsTest extends Unit
 
         $mock = new MockHandler($queue);
 
-        $client = new Client('/', new TestLogger(), HandlerStack::create($mock));
         $credentials = new Credentials('client_id', 'john@email.address', 'John Doe');
+        $client = (new ClientBuilder('/', $credentials))
+            ->setHandler(HandlerStack::create($mock))
+            ->build();
 
-        $provider = new SupermetricsPosts($client, $credentials);
+        $provider = new SupermetricsPosts($client);
 
         $actual = $provider->getPosts();
         $this->assertEquals($posts, $actual);

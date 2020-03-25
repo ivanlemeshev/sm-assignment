@@ -4,7 +4,6 @@ namespace App\Provider;
 
 use App\Entity\Post;
 use App\Service\Supermetrics\Client;
-use App\Service\Supermetrics\Credentials;
 
 /**
  * Class SupermetricsPosts
@@ -16,23 +15,16 @@ class SupermetricsPosts
     /**
      * @var Client
      */
-    private Client $supermetrics;
-
-    /**
-     * @var Credentials
-     */
-    private Credentials $credentials;
+    private Client $client;
 
     /**
      * SupermetricsPosts constructor.
      *
-     * @param Client $supermetrics
-     * @param Credentials $credentials
+     * @param Client $client
      */
-    public function __construct(Client $supermetrics, Credentials $credentials)
+    public function __construct(Client $client)
     {
-        $this->supermetrics = $supermetrics;
-        $this->credentials = $credentials;
+        $this->client = $client;
     }
 
     /**
@@ -52,7 +44,7 @@ class SupermetricsPosts
         }
 
         for ($page = 1; $page <= 10; $page++) {
-            $rows = $this->supermetrics->getPosts($token, $page);
+            $rows = $this->client->getPosts($token, $page);
 
             /** @var array $row */
             foreach ($rows as $row) {
@@ -76,7 +68,7 @@ class SupermetricsPosts
     {
         if (empty($_SESSION["token"]) || $_SESSION["token_expired_time"] < strtotime('now')) {
             $_SESSION["token_expired_time"] = strtotime('now + 50 minutes');
-            $_SESSION["token"] = $this->supermetrics->register($this->credentials);
+            $_SESSION["token"] = $this->client->register();
         }
 
         return strval($_SESSION["token"]);

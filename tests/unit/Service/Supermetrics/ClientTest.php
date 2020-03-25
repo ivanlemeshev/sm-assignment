@@ -1,6 +1,7 @@
 <?php
 
 use App\Service\Supermetrics\Client;
+use App\Service\Supermetrics\ClientBuilder;
 use App\Service\Supermetrics\Credentials;
 use Codeception\Test\Unit;
 use GuzzleHttp\Handler\MockHandler;
@@ -30,13 +31,16 @@ class ClientTest extends Unit
             new Response(500),
         ]);
 
-        $client = new Client('/', new TestLogger(), HandlerStack::create($mock));
-
         $credentials = new Credentials('some_client_id', 'john@email.address', 'John Doe');
-        $actual = $client->register($credentials);
+
+        $client = (new ClientBuilder('/', $credentials))
+            ->setHandler(HandlerStack::create($mock))
+            ->build();
+
+        $actual = $client->register();
         $this->assertEquals($token, $actual);
 
-        $actual = $client->register($credentials);
+        $actual = $client->register();
         $this->assertEquals('', $actual);
 
         $mock->reset();
@@ -70,7 +74,12 @@ class ClientTest extends Unit
             new Response(500),
         ]);
 
-        $client = new Client('/', new TestLogger(), HandlerStack::create($mock));
+
+        $credentials = new Credentials('client', 'email', 'name');
+
+        $client = (new ClientBuilder('/', $credentials))
+            ->setHandler(HandlerStack::create($mock))
+            ->build();
 
         $actual = $client->getPosts('token', 1);
         $this->assertEquals($posts, $actual);

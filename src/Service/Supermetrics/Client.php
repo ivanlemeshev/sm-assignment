@@ -25,35 +25,38 @@ class Client
     private LoggerInterface $logger;
 
     /**
-     * Supermetrics constructor.
-     *
-     * @param string $baseUrl
-     * @param LoggerInterface $logger
-     * @param callable|null $handler
+     * @var Credentials
      */
-    public function __construct(string $baseUrl, LoggerInterface $logger, callable $handler = null)
+    private Credentials $credentials;
+
+    /**
+     * Client constructor.
+     *
+     * @param ClientBuilder $builder
+     */
+    public function __construct(ClientBuilder $builder)
     {
         $this->client = new Guzzle([
-            'base_uri' => $baseUrl,
+            'base_uri' => $builder->getBaseUrl(),
             'timeout'  => 1.0,
-            'handler' => $handler,
+            'handler' => $builder->getHandler(),
         ]);
-        $this->logger = $logger;
+        $this->credentials = $builder->getCredentials();
+        $this->logger = $builder->getLogger();
     }
 
     /**
      * Registers the client and returns token.
      *
-     * @param Credentials $credentials
      * @return string
      */
-    public function register(Credentials $credentials): string
+    public function register(): string
     {
         try {
             $formParams = [
-                'client_id' => $credentials->getClientId(),
-                'email' => $credentials->getEmail(),
-                'name' => $credentials->getName(),
+                'client_id' => $this->credentials->getClientId(),
+                'email' => $this->credentials->getEmail(),
+                'name' => $this->credentials->getName(),
             ];
 
             $response = $this->client->post('/assignment/register', [
